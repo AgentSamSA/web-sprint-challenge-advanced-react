@@ -21,7 +21,7 @@ export default class PlantList extends Component {
       .then(res => {
         console.log(res);
         this.setState({
-          plants: res.data
+          plants: res.data.plantsData
         });
         console.log(this.state.plants);
       })
@@ -29,9 +29,13 @@ export default class PlantList extends Component {
   }
 
   render() {
+    if (!this.state.plants.length === 0) {
+      return <h1>Loading plant data...</h1>
+    }
+
     return (
       <main className="plant-list">
-        {this.state.plants.map((plant) => (
+        {Array.isArray(this.state.plants) && this.state.plants.map((plant) => (
           <div className="plant-card" key={plant.id}>
             <img className="plant-image" src={plant.img} alt={plant.name} />
             <div className="plant-details">
